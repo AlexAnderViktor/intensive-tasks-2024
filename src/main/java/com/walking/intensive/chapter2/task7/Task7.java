@@ -28,15 +28,16 @@ package com.walking.intensive.chapter2.task7;
 public class Task7 {
     public static void main(String[] args) {
 //        Для собственных проверок можете делать любые изменения в этом методе
-        int n = 0;
+        int n = 200;
 
         System.out.println(getFriendlyPair(n));
     }
 
     static int getSumOfDivisors(int number) {
         int sumOfDivisors = 1;
+        double a = Math.sqrt(number);
 
-        for (int j = 2; j <= Math.sqrt((number)); j++) {
+        for (int j = 2; j <= a; j++) {
             if (number % j == 0) {
                 sumOfDivisors += j;
                 if (j != number / j) {
