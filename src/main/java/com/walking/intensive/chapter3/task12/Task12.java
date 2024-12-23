@@ -1,6 +1,5 @@
 package com.walking.intensive.chapter3.task12;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 /**
@@ -48,43 +47,41 @@ public class Task12 {
         System.out.println(Arrays.toString(result));
     }
 
-    static boolean validBaskets(String baskets) {
-        for (char c : baskets.toCharArray()) {
-            if (c != '0' && c != '1') {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     static int[] getMovementsNumber(String baskets) {
-        if (!validBaskets(baskets) || baskets == null) {
+        if (!isValidBaskets(baskets)) {
             return new int[]{};
         }
 
-        int length = baskets.length();
-        int[] arr = new int[length];
-        int[] numberOfBallsInBaskets = new int[length];
+        int lengthInputString = baskets.length();
+        int[] arr = new int[lengthInputString];
 
-        for (int i = 0; i < length; i++) {
-            numberOfBallsInBaskets[i] = baskets.charAt(i) - '0';
-        }
-
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < lengthInputString; i++) {
             int totalMoves = 0;
 
-            for (int j = 0; j < i; j++) {
-                totalMoves += numberOfBallsInBaskets[j] * (i - j);
-            }
-
-            for (int j = i + 1; j < length; j++) {
-                totalMoves += numberOfBallsInBaskets[j] * (j - i);
+            for (int j = 0; j < lengthInputString; j++) {
+                if (j != i && baskets.charAt(j) == '1') {
+                    totalMoves += Math.abs(i - j);
+                }
             }
 
             arr[i] = totalMoves;
         }
 
         return arr;
+    }
+
+    static boolean isValidBaskets(String baskets) {
+        if (baskets == null) {
+            return false;
+        }
+
+        for (int i = 0; i < baskets.length(); i++) {
+            char c = baskets.charAt(i);
+            if (c != '0' && c != '1') {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
