@@ -1,5 +1,7 @@
 package com.walking.intensive.chapter3.task14;
 
+import java.util.Arrays;
+
 /**
  * Необходимо разработать программу, которая определяет количество объектов на радарах.
  *
@@ -32,7 +34,7 @@ package com.walking.intensive.chapter3.task14;
  * <ul>
  * <li>objectCounts[0] = 3, потому что радар с координатами (2;3) и радиусом действия 1 видит объекты с координатами
  * (1;3), (2;2) и (3;3). Всего 3 объекта.
- *</ul>
+ * </ul>
  *
  * <p>При наличии некорректных входных данных верните из метода пустой массив.
  *
@@ -43,11 +45,52 @@ package com.walking.intensive.chapter3.task14;
  */
 public class Task14 {
     public static void main(String[] args) {
-//        Для собственных проверок можете делать любые изменения в этом методе
+        int[][] objectLocations = {{1, 1}, {2, 2}, {3, 3}, {4, 4}, {5, 5}};
+        int[][] radars = {{1, 2, 3}, {2, 2, -5}, {4, 3, -1}, {4, 3, -6}};
+        int[] result = getObjectCounts(objectLocations, radars);
+
+        System.out.println(Arrays.toString(result));
     }
 
     static int[] getObjectCounts(int[][] objectLocations, int[][] radars) {
-        // Ваш код
-        return new int[0];
+        if (objectLocations == null || radars == null) {
+            return new int[]{};
+        }
+
+        int[] objectCounts = new int[radars.length];
+
+        for (int j = 0; j < radars.length; j++) {
+            if (radars[j].length != 3) {
+                return new int[]{};
+            }
+
+            for (int k = 0; k < radars[j].length; k++) {
+                if (radars[j][k] < 0) {
+                    return new int[]{};
+                }
+            }
+
+            int radarX = radars[j][0];
+            int radarY = radars[j][1];
+            int radarRadius = radars[j][2];
+
+            for (int i = 0; i < objectLocations.length; i++) {
+                if (objectLocations[i].length < 2) {
+                    return new int[]{};
+                }
+
+                int objectX = objectLocations[i][0];
+                int objectY = objectLocations[i][1];
+
+                int distanceSquared = (radarX - objectX) * (radarX - objectX) + (radarY - objectY) * (radarY - objectY);
+                int radiusSquared = radarRadius * radarRadius;
+
+                if (distanceSquared <= radiusSquared) {
+                    objectCounts[j]++;
+                }
+            }
+        }
+
+        return objectCounts;
     }
 }
