@@ -71,6 +71,7 @@ public class Task13 {
         for (int i = 0; i < plants.length; i++) {
             if (currentWater < plants[i]) {
                 counterTotalSteps += 2 * i;
+                currentWater = wateringCanVolume;
             }
 
             currentWater -= plants[i];
