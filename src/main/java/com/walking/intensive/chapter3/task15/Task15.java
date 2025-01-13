@@ -40,11 +40,48 @@ package com.walking.intensive.chapter3.task15;
  */
 public class Task15 {
     public static void main(String[] args) {
-//        Для собственных проверок можете делать любые изменения в этом методе
+        int[][] city = {{3, 0}, {2, 4, 5, 7, 8, 0}, {9, 2, 6}, {8}, {3, 8, 0, 1, 4, 6}};
+        System.out.println(getMaxFloors(city));
     }
 
     static int getMaxFloors(int[][] city) {
-        // Ваш код
-        return 0;
+        if (city == null || city.length == 0 || city[0].length == 0) {
+            return -1;
+        }
+
+        int n = city.length;
+
+        for (int i = 0; i < n; i++) {
+            if (city[i].length != n) {
+                return -1;
+            }
+        }
+
+        int m = city[0].length;
+
+        int[] maxInRow = new int[n];
+        int[] maxInCol = new int[m];
+
+        for (int r = 0; r < n; r++) {
+            for (int c = 0; c < m; c++) {
+                if (city[r][c] < 0) {
+                    return -1;
+                }
+
+                maxInRow[r] = Math.max(maxInRow[r], city[r][c]);
+                maxInCol[c] = Math.max(maxInCol[c], city[r][c]);
+            }
+        }
+
+        int totalFloors = 0;
+
+        for (int r = 0; r < n; r++) {
+            for (int c = 0; c < m; c++) {
+                int maxPossibleHeight = Math.min(maxInRow[r], maxInCol[c]);
+                totalFloors += maxPossibleHeight - city[r][c];
+            }
+        }
+
+        return totalFloors;
     }
 }
