@@ -1,5 +1,7 @@
 package com.walking.intensive.chapter4.task16;
 
+import java.util.Arrays;
+
 /**
  * После завершения интенсива вы достаточно быстро познакомитесь с Java Collection Framework.
  * Это знакомство позволит сильно упростить работу с массивами данных.
@@ -20,7 +22,48 @@ package com.walking.intensive.chapter4.task16;
  */
 public class Task16 {
     public static void main(String[] args) {
-//        Для собственных проверок можете делать любые изменения в этом методе
+
+        int[] arr1 = {10, 11, 12, 1, 2, 4, 5, 7};
+
+        int[] arr2 = {10, 11, 12, 1, 2, 4, 5, 6};
+
+        int[] arr = {11, 12, 3, 5, 6};
+
+        int[] result = removeAll(arr1, arr);
+
+        int value = -10;
+
+        int index = 5;
+
+        int newValue = 55;
+
+//        System.out.println(isEqualSize(arr1, arr2));
+
+//        System.out.println(isEquals(arr1, arr2));
+
+//        System.out.println(Arrays.toString(incrementEach(arr)));
+
+//        System.out.println(Arrays.toString(multiplyEach(arr1, arr2)));
+
+//        System.out.println(Arrays.toString(subtractEach(arr1, arr2)));
+
+//        System.out.println(Arrays.toString(reverse(arr)));
+
+//        System.out.println(Arrays.toString(add(arr, index, newValue)));
+
+//        System.out.println(isContains(arr, value));
+
+//        System.out.println(getFirstIndex(arr, value));
+
+//        System.out.println(getLastIndex(arr, value));
+
+//        System.out.println(Arrays.toString(removeByIndex(arr, index)));
+
+        System.out.println(Arrays.toString(removeAll(arr, result)));
+
+//        System.out.println(isSimilar(arr1, arr2));
+
+//        System.out.println(Arrays.toString(shiftIndex(arr)));
     }
 
     /**
@@ -29,7 +72,11 @@ public class Task16 {
      * В остальных случаях - false.
      */
     static boolean isEqualSize(int[] arr1, int[] arr2) {
-        // Ваш код
+
+        if (arr1 != null && arr2 != null && arr1.length > 0 && arr2.length > 0 && arr1.length == arr2.length) {
+            return true;
+        }
+
         return false;
     }
 
@@ -41,7 +88,16 @@ public class Task16 {
      * <p>Идентичными считаются массивы одинаковой длины, для которых arr1[i] == arr2[i] для любого i.
      */
     static boolean isEquals(int[] arr1, int[] arr2) {
-        // Ваш код
+        if (arr1.length == arr2.length) {
+            for (int i = 0; i < arr1.length; i++) {
+                if (arr1[i] != arr2[i]) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         return false;
     }
 
@@ -58,8 +114,17 @@ public class Task16 {
      * <p>Возвращаемое значение: [11,21,31,41,51,21,61]
      */
     static int[] incrementEach(int[] arr) {
-        // Ваш код
-        return null;
+        if (arr == null || arr.length == 0) {
+            return new int[]{};
+        }
+
+        int[] arr2 = new int[arr.length];
+
+        for (int i = 0; i < arr.length; i++) {
+            arr2[i] = arr[i] + 1;
+        }
+
+        return arr2;
     }
 
     /**
@@ -78,8 +143,30 @@ public class Task16 {
      * <p>Возвращаемое значение: [8,15,24]
      */
     static int[] multiplyEach(int[] arr1, int[] arr2) {
-        // Ваш код
-        return null;
+        if (arr1.length == 0 && arr2.length == 0) {
+            return new int[]{};
+        }
+
+        int maxLength = Math.max(arr1.length, arr2.length);
+
+        int[] result = new int[maxLength];
+
+        for (int i = 0; i < maxLength; i++) {
+            int value1 = 0;
+            int value2 = 0;
+
+            if (i < arr1.length) {
+                value1 = arr1[i];
+            }
+
+            if (i < arr2.length) {
+                value2 = arr2[i];
+            }
+
+            result[i] = value1 * value2;
+        }
+
+        return result;
     }
 
     /**
@@ -98,8 +185,29 @@ public class Task16 {
      * <p>Возвращаемое значение: [-2,-2,2]
      */
     static int[] subtractEach(int[] arr1, int[] arr2) {
-        // Ваш код
-        return null;
+        if (arr1 == null && arr2 == null) {
+            return new int[0];
+        }
+
+        int maxLength = Math.max(arr1.length, arr2.length);
+        int[] result = new int[maxLength];
+
+        for (int i = 0; i < maxLength; i++) {
+            int value1 = 0;
+            int value2 = 0;
+
+            if (i < arr1.length) {
+                value1 = arr1[i];
+            }
+
+            if (i < arr2.length) {
+                value2 = arr2[i];
+            }
+
+            result[i] = value1 - value2;
+        }
+
+        return result;
     }
 
     /**
@@ -115,8 +223,17 @@ public class Task16 {
      * <p>Возвращаемое значение: [4,3,2]
      */
     static int[] reverse(int[] arr) {
-        // Ваш код
-        return null;
+        if (arr == null) {
+            return new int[0];
+        }
+
+        int[] result = new int[arr.length];
+
+        for (int i = 0; i < arr.length; i++) {
+            result[i] = arr[arr.length - 1 - i];
+        }
+
+        return result;
     }
 
     /**
@@ -134,8 +251,27 @@ public class Task16 {
      * <p>Возвращаемое значение: [1,2,456,3,4]
      */
     static int[] add(int[] arr, int index, int newValue) {
-        // Ваш код
-        return null;
+        if (index < 0) {
+            return new int[0];
+        }
+
+        if (index > arr.length) {
+            index = arr.length;
+        }
+
+        int[] newArr = new int[arr.length + 1];
+
+        for (int i = 0; i < index; i++) {
+            newArr[i] = arr[i];
+        }
+
+        newArr[index] = newValue;
+
+        for (int i = index; i < arr.length; i++) {
+            newArr[i + 1] = arr[i];
+        }
+
+        return newArr;
     }
 
     /**
@@ -144,7 +280,12 @@ public class Task16 {
      * В остальных случаях - false.
      */
     static boolean isContains(int[] arr, int value) {
-        // Ваш код
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == value) {
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -169,8 +310,13 @@ public class Task16 {
      * </ul>
      */
     static int getFirstIndex(int[] arr, int value) {
-        // Ваш код
-        return 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == value) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     /**
@@ -194,8 +340,15 @@ public class Task16 {
      * </ul>
      */
     static int getLastIndex(int[] arr, int value) {
-        // Ваш код
-        return 0;
+        int maxIndex = -1;
+
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == value) {
+                maxIndex = i;
+            }
+        }
+
+        return maxIndex;
     }
 
     /**
@@ -211,8 +364,23 @@ public class Task16 {
      * <p>Возвращаемое значение: [10,20,40,50,20,60]
      */
     static int[] removeByIndex(int[] arr, int index) {
-        // Ваш код
-        return null;
+        if (arr.length == 0 || index < 0) {
+            return new int[0];
+        }
+
+        if (index > arr.length) {
+            return Arrays.copyOf(arr, arr.length);
+        }
+
+        int[] result = new int[arr.length - 1];
+
+        for (int i = 0, j = 0; i < arr.length; i++) {
+            if (i != index){
+                result[j++] = arr[i];
+            }
+        }
+
+        return result;
     }
 
     /**
@@ -226,8 +394,43 @@ public class Task16 {
      * <p>Возвращаемое значение: [10,40,50,60]
      */
     static int[] removeAll(int[] arr, int... removingValues) {
-        // Ваш код
-        return null;
+        int count = 0;
+
+        for (int i = 0; i < arr.length; i++) {
+            boolean toRemove = false;
+
+            for (int j = 0; j < removingValues.length; j++) {
+                if (arr[i] == removingValues[j]) {
+                    toRemove = true;
+                    break;
+                }
+            }
+
+            if (!toRemove) {
+                count++;
+            }
+        }
+
+        int[] result = new int[count];
+        int index = 0;
+
+        for (int i = 0; i < arr.length; i++) {
+            boolean toRemove = false;
+
+            for (int j = 0; j < removingValues.length; j++) {
+                if (arr[i] == removingValues[j]) {
+                    toRemove = true;
+                    break;
+                }
+            }
+
+            if (!toRemove) {
+                result[index] = arr[i];
+                index++;
+            }
+        }
+
+        return result;
     }
 
     /**
@@ -236,9 +439,38 @@ public class Task16 {
      * и все числа из второго массива присутствуют в первом.
      * При этом индексы элементов могут не совпадать.
      */
+
+    public static void bubbleSort(int[] arr) {
+        int n = arr.length;
+        boolean swapped;
+
+        for (int i = 0; i < n - 1; i++) {
+            swapped = false;
+
+            for (int j = 0; j < n - i - 1; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                    swapped = true;
+                }
+            }
+
+            if (!swapped) {
+                break;
+            }
+        }
+    }
+
     static boolean isSimilar(int[] arr1, int[] arr2) {
-        // Ваш код
-        return false;
+        if (arr1.length != arr2.length) {
+            return false;
+        }
+
+        bubbleSort(arr1);
+        bubbleSort(arr2);
+
+        return Arrays.equals(arr1, arr2);
     }
 
     /**
@@ -254,7 +486,21 @@ public class Task16 {
      * <p>Возвращаемое значение: [4,1,2,3]
      */
     static int[] shiftIndex(int[] arr) {
-        // Ваш код
-        return null;
+        if (arr == null) {
+            return new int[0];
+        }
+
+        int[] newArr = new int[arr.length];
+
+        for (int i = 0; i < arr.length; i++) {
+            if (i == arr.length - 1) {
+                newArr[0] = arr[i];
+            }
+            else {
+                newArr[i+1] = arr[i];
+            }
+        }
+
+        return newArr;
     }
 }
