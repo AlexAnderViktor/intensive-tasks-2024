@@ -1,5 +1,7 @@
 package com.walking.intensive.chapter4.task18;
 
+import java.util.Arrays;
+
 /**
  * Восемнадцатилетний Емеля едет в соседнюю деревню на печи искать себе невесту-ровесницу.
  * В каждой избушке в ряд живут невесты, каждая следующая старше
@@ -23,7 +25,9 @@ package com.walking.intensive.chapter4.task18;
  */
 public class Task18 {
     public static void main(String[] args) {
-//        Для собственных проверок можете делать любые изменения в этом методе
+        int[] arr = new int[]{1, 3, 5, 7, 9, 11, 13};
+        int target = 8;
+        System.out.println(find(arr, target));
     }
 
     /**
@@ -55,7 +59,69 @@ public class Task18 {
      * </ul>
      */
     static int find(int[] girlAges, int targetAge) {
-        // Ваш код
-        return 0;
+        int result = binarySearch(girlAges, targetAge);
+
+        return result;
+    }
+
+    private static int binarySearch(int[] array, int target) {
+        int left = 0;
+        int right = array.length - 1;
+        int bestIndex = -1;
+
+        while (left <= right) {
+            int middlElement = left + (right - left) / 2;
+
+            if (array[middlElement] == target) {
+                return target;// Элемент найден
+            }
+            if (array[middlElement] < target) {
+                bestIndex = array[middlElement];
+                left = middlElement + 1;
+            } else {
+                right = middlElement - 1;
+            }
+        }
+
+        return bestIndex;
+    }
+
+    private static int[] quickBySort(int[] array) {
+        if (array == null) {
+            return new int[0];
+        }
+
+        quickSort(array, 0, array.length - 1);
+
+        return array;
+    }
+
+    private static void quickSort(int[] array, int left, int right) {
+
+        if (left < right) {
+            int pivotIndex = partition(array, left, right);
+            quickSort(array, left, pivotIndex - 1);
+            quickSort(array, pivotIndex + 1, right);
+        }
+    }
+
+    private static int partition(int[] array, int left, int right) {
+        int pivot = array[right];
+        int i = left - 1;
+
+        for (int j = left; j < right; j++) {
+            if (array[j] <= pivot) {
+                i++;
+
+                int temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+        }
+
+        int temp = array[i + 1];
+        array[i + 1] = array[right];
+        array[right] = temp;
+        return i + 1;
     }
 }
