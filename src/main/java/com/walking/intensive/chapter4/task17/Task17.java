@@ -1,5 +1,8 @@
 package com.walking.intensive.chapter4.task17;
 
+import java.util.Arrays;
+import java.util.Random;
+
 /**
  * Смауг, живущий в пещере с золотом, был заперт внутри горы.
  * Чтобы занять свое время, он развлекал себя следующей игрой.
@@ -21,7 +24,11 @@ package com.walking.intensive.chapter4.task17;
  */
 public class Task17 {
     public static void main(String[] args) {
-//        Для собственных проверок можете делать любые изменения в этом методе
+        long time1000 = getBenchmarkOn1000();
+        System.out.println("Время сортировки для 1000 элементов: " + time1000 + " миллисекунд");
+
+        long time10000 = getBenchmarkOn10000();
+        System.out.println("Время сортировки для 10000 элементов: " + time10000 + " миллисекунд");
     }
 
     /**
@@ -40,9 +47,33 @@ public class Task17 {
      * </ol>
      */
     static int[] sortByBubble(int[] array) {
-        // Ваш код
-        return new int[]{};
+        if (array == null) {
+            return new int[0];
+        }
+
+        int n = array.length;
+
+        for (int i = 0; i < n - 1; i++) {
+            boolean swap = false;
+
+            for (int j = 0; j < n - i - 1; j++) {
+
+                if (array[j] > array[j + 1]) {
+                    int temp = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = temp;
+                    swap = true;
+                }
+            }
+
+            if (!swap) {
+                break;
+            }
+        }
+
+        return array;
     }
+
     /**
      * Быстрая сортировка, она же QuickSort:
      *
@@ -84,9 +115,42 @@ public class Task17 {
      * </ol>
      */
     static int[] sortByQuicksort(int[] array) {
-        // Ваш код
-        return new int[]{};
+        if (array == null) {
+            return new int[0];
+        }
+
+        quickSort(array, 0, array.length - 1);
+        return array;
     }
+
+    private static void quickSort(int[] array, int left, int right) {
+        if (left < right) {
+            int pivotIndex = partition(array, left, right);
+            quickSort(array, left, pivotIndex - 1);
+            quickSort(array, pivotIndex + 1, right);
+        }
+    }
+
+    private static int partition(int[] array, int left, int right) {
+        int pivot = array[right];
+        int i = (left - 1);
+
+        for (int j = left; j < right; j++) {
+
+            if (array[j] <= pivot) {
+                i++;
+                int temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+        }
+
+        int temp = array[i + 1];
+        array[i + 1] = array[right];
+        array[right] = temp;
+        return i + 1;
+    }
+
 
     /**
      * Создайте массив случайных целых чисел из 1 000 элементов и сравните время,
@@ -97,15 +161,53 @@ public class Task17 {
      * Время выполнения - разность времени после работы алгоритма и времени до работы алгоритма
      */
     static long getBenchmarkOn1000() {
-        // Ваш код
-        return 0;
+        int[] array = generateRandomArray(1000);
+
+        long startTime = System.currentTimeMillis();
+
+        sortByBubble(array.clone());
+
+        long bubbleTime = System.currentTimeMillis() - startTime;
+
+        startTime = System.currentTimeMillis();
+
+        sortByQuicksort(array.clone());
+
+        long quickSortTime = System.currentTimeMillis() - startTime;
+
+        return bubbleTime - quickSortTime;
     }
+
 
     /**
      * Повторите предыдущие вычисления из метода getBenchmarkOn1000() для массива в 10 000 элементов.
      */
     static long getBenchmarkOn10000() {
-        // Ваш код
-        return 0;
+        int[] array = generateRandomArray(10000);
+
+        long startTime = System.currentTimeMillis();
+
+        sortByBubble(array.clone());
+
+        long bubbleTime = System.currentTimeMillis() - startTime;
+
+        startTime = System.currentTimeMillis();
+
+        sortByQuicksort(array.clone());
+
+        long quickSortTime = System.currentTimeMillis() - startTime;
+
+        return bubbleTime - quickSortTime;
+    }
+
+    private static int[] generateRandomArray(int size) {
+        Random random = new Random();
+        int[] array = new int[size];
+
+        for (int i = 0; i < size; i++) {
+            array[i] = random.nextInt(1000) + 1;
+        }
+
+        return array;
     }
 }
