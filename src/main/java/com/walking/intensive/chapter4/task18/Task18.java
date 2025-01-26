@@ -1,6 +1,5 @@
 package com.walking.intensive.chapter4.task18;
 
-import java.util.Arrays;
 
 /**
  * Восемнадцатилетний Емеля едет в соседнюю деревню на печи искать себе невесту-ровесницу.
@@ -59,31 +58,11 @@ public class Task18 {
      * </ul>
      */
     static int find(int[] girlAges, int targetAge) {
+        quickBySort(girlAges);
+
         int result = binarySearch(girlAges, targetAge);
 
         return result;
-    }
-
-    private static int binarySearch(int[] array, int target) {
-        int left = 0;
-        int right = array.length - 1;
-        int bestIndex = -1;
-
-        while (left <= right) {
-            int middlElement = left + (right - left) / 2;
-
-            if (array[middlElement] == target) {
-                return target;// Элемент найден
-            }
-            if (array[middlElement] < target) {
-                bestIndex = array[middlElement];
-                left = middlElement + 1;
-            } else {
-                right = middlElement - 1;
-            }
-        }
-
-        return bestIndex;
     }
 
     private static int[] quickBySort(int[] array) {
@@ -123,5 +102,26 @@ public class Task18 {
         array[i + 1] = array[right];
         array[right] = temp;
         return i + 1;
+    }
+
+    private static int binarySearch(int[] array, int target) {
+        int left = 0;
+        int right = array.length - 1;
+        int bestValue = -1;
+
+        while (left <= right) {
+            int middlElement = left + (right - left) / 2;
+
+            if (array[middlElement] == target) {
+                return array[middlElement];
+            } else if (array[middlElement] < target) {
+                bestValue = array[middlElement];
+                left = middlElement + 1;
+            } else {
+                right = middlElement - 1;
+            }
+        }
+
+        return bestValue;
     }
 }
